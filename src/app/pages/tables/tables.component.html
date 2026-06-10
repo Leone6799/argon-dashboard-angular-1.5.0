@@ -1,0 +1,264 @@
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-8 col-7">
+          <h2 class="text-white d-inline-block mb-0">
+            Consultas Agendadas
+          </h2>
+          <p class="text-white-50 mb-0 mt-2">
+            Gerencie as consultas solicitadas pelos pacientes.
+          </p>
+        </div>
+
+        <div class="col-lg-4 col-5 text-right">
+          <button class="btn btn-sm btn-neutral">
+            Painel do Nutricionista
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">
+                    Pendentes
+                  </h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    {{ consultasPendentes }}
+                  </span>
+                </div>
+
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                    <i class="ni ni-time-alarm"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">
+                    Confirmadas
+                  </h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    {{ consultasConfirmadas }}
+                  </span>
+                </div>
+
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-success text-white rounded-circle shadow">
+                    <i class="ni ni-check-bold"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">
+                    Canceladas
+                  </h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    {{ consultasCanceladas }}
+                  </span>
+                </div>
+
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                    <i class="ni ni-fat-remove"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">
+                    Concluídas
+                  </h5>
+                  <span class="h2 font-weight-bold mb-0">
+                    {{ consultasConcluidas }}
+                  </span>
+                </div>
+
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                    <i class="ni ni-badge"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">
+                Lista de consultas
+              </h3>
+            </div>
+
+            <div class="col text-right">
+              <button class="btn btn-sm btn-primary" type="button" (click)="carregarConsultas()">
+                Atualizar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="mensagem" class="alert alert-danger mx-4">
+          {{ mensagem }}
+        </div>
+
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Paciente</th>
+                <th scope="col">Idade</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Data</th>
+                <th scope="col">Horário</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="text-right">Ações</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngIf="consultas.length === 0">
+                <td colspan="7" class="text-center text-muted py-4">
+                  Nenhuma consulta encontrada.
+                </td>
+              </tr>
+
+              <tr *ngFor="let consulta of consultas">
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <div class="avatar rounded-circle mr-3 bg-gradient-primary text-white d-flex align-items-center justify-content-center">
+                      <i class="ni ni-single-02"></i>
+                    </div>
+
+                    <div class="media-body">
+                      <span class="mb-0 text-sm font-weight-bold">
+                        {{ consulta.paciente.nome }}
+                      </span>
+                      <br />
+                      <small class="text-muted">
+                        {{ consulta.paciente.telefone }}
+                      </small>
+                    </div>
+                  </div>
+                </th>
+
+                <td>
+                  {{ consulta.paciente.idade }}
+                </td>
+
+                <td>
+                  {{ consulta.paciente.email }}
+                </td>
+
+                <td>
+                  {{ consulta.data }}
+                </td>
+
+                <td>
+                  {{ consulta.horario }}
+                </td>
+
+                <td>
+                  <span
+                    class="badge badge-pill"
+                    [ngClass]="{
+                      'badge-warning': consulta.status === 'PENDENTE',
+                      'badge-success': consulta.status === 'CONFIRMADA',
+                      'badge-danger': consulta.status === 'CANCELADA',
+                      'badge-info': consulta.status === 'CONCLUIDA'
+                    }"
+                  >
+                    {{ consulta.status }}
+                  </span>
+                </td>
+
+                <td class="text-right">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-info"
+                    (click)="abrirDetalhes(consulta.id)"
+                  >
+                    Detalhes
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-success"
+                    (click)="confirmar(consulta.id)"
+                    [disabled]="consulta.status === 'CONFIRMADA' || consulta.status === 'CANCELADA' || consulta.status === 'CONCLUIDA'"
+                  >
+                    Confirmar
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-danger"
+                    (click)="cancelar(consulta.id)"
+                    [disabled]="consulta.status === 'CANCELADA' || consulta.status === 'CONCLUIDA'"
+                  >
+                    Cancelar
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-secondary"
+                    (click)="concluir(consulta.id)"
+                    [disabled]="consulta.status !== 'CONFIRMADA'"
+                  >
+                    Concluir
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card-footer py-4">
+          <nav aria-label="Consultas">
+            <p class="text-muted mb-0">
+              As consultas pendentes precisam ser confirmadas ou canceladas pelo nutricionista.
+            </p>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

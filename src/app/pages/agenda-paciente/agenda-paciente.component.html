@@ -1,0 +1,104 @@
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <h2 class="text-white">Agendar Consulta</h2>
+    <p class="text-white-50">
+      Escolha uma data disponível e selecione um horário para atendimento nutricional.
+    </p>
+  </div>
+</div>
+
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-7 mb-5 mb-xl-0">
+      <div class="card shadow">
+        <div class="card-header bg-white">
+          <h3 class="mb-0">Escolha uma data</h3>
+        </div>
+
+        <div class="card-body">
+          <div class="agenda-date-title mb-4">
+            <button
+              type="button"
+              class="agenda-date-icon agenda-date-icon-button"
+              (click)="abrirCalendario()"
+            >
+              <i class="ni ni-calendar-grid-58"></i>
+            </button>
+
+            <div>
+              <h4 class="mb-1">Calendário de agendamento</h4>
+              <p class="text-muted mb-0">
+                Clique no calendário e escolha apenas uma data disponível.
+              </p>
+            </div>
+          </div>
+
+          <input
+            id="calendario-agendafit"
+            #calendarioInput
+            type="text"
+            class="form-control agenda-date-input"
+            placeholder="Selecionar data disponível"
+          />
+
+          <div *ngIf="carregandoDatas" class="text-muted mt-3">Carregando datas disponíveis...</div>
+
+          <div *ngIf="carregandoHorarios" class="text-muted mt-3">Carregando horários...</div>
+
+          <div *ngIf="mensagem" class="alert alert-info mt-3">
+            {{ mensagem }}
+          </div>
+
+          <div class="mt-4" *ngIf="horarios.length > 0">
+            <h4 class="mb-3">Horários disponíveis</h4>
+
+            <div class="horarios-grid">
+              <button
+                *ngFor="let horario of horarios"
+                class="btn btn-outline-primary horario-btn"
+                type="button"
+                (click)="agendar(horario)"
+              >
+                {{ horario.horario }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-5">
+      <div class="card shadow">
+        <div class="card-header bg-white">
+          <h3 class="mb-0">Minhas consultas</h3>
+        </div>
+
+        <div class="card-body">
+          <div *ngIf="consultas.length === 0" class="text-muted">
+            Nenhuma consulta encontrada.
+          </div>
+
+          <div *ngFor="let consulta of consultas" class="consulta-card">
+            <div>
+              <strong>{{ consulta.data }} às {{ consulta.horario }}</strong>
+              <p class="mb-1">Status: {{ consulta.status }}</p>
+              <small>Nutricionista: {{ consulta.nutricionista?.nome }}</small>
+            </div>
+
+            <span
+              class="badge badge-pill"
+              [ngClass]="{
+                'badge-warning': consulta.status === 'PENDENTE',
+                'badge-success': consulta.status === 'CONFIRMADA',
+                'badge-danger': consulta.status === 'CANCELADA',
+                'badge-info': consulta.status === 'CONCLUIDA'
+              }"
+            >
+              {{ consulta.status }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

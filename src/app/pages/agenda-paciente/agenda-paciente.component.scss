@@ -1,0 +1,121 @@
+.agenda-date-box {
+  background: #f8f9fe;
+  border: 1px solid #e9ecef;
+  border-radius: 18px;
+  padding: 22px;
+}
+
+.agenda-date-input {
+  height: 54px;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.agenda-days {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+  gap: 12px;
+}
+
+.agenda-day {
+  border: 1px solid #dfe4ea;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 14px 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  text-align: center;
+}
+
+.agenda-day:hover {
+  transform: translateY(-2px);
+  border-color: #5e72e4;
+  box-shadow: 0 8px 18px rgba(94, 114, 228, 0.18);
+}
+
+.agenda-day.active {
+  background: linear-gradient(135deg, #5e72e4, #825ee4);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.agenda-day-week {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: capitalize;
+  margin-bottom: 6px;
+}
+
+.agenda-day strong {
+  font-size: 1.35rem;
+}
+
+.horarios-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.horario-btn {
+  min-width: 100px;
+  border-radius: 999px;
+}
+
+.consulta-card {
+  border: 1px solid #e9ecef;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.agenda-day.disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  border-color: #d1d5db;
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.agenda-day.disabled:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: #d1d5db;
+}
+
+.agenda-day small {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+.agenda-date-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.agenda-date-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #5e72e4, #825ee4);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  box-shadow: 0 8px 18px rgba(94, 114, 228, 0.25);
+}
+
+.agenda-date-icon-button {
+  border: none;
+  cursor: pointer;
+}
+
+.agenda-date-icon-button:hover {
+  transform: translateY(-2px);
+}

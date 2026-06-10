@@ -1,0 +1,47 @@
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <h2 class="text-white">Detalhes da Consulta</h2>
+    <p class="text-white-50">Visualize os dados do paciente e gerencie o atendimento.</p>
+  </div>
+</div>
+
+<div class="container-fluid mt--7">
+  <div class="card shadow" *ngIf="consulta">
+    <div class="card-header">
+      <h3 class="mb-0">Paciente</h3>
+    </div>
+
+    <div class="card-body">
+      <p><strong>Nome:</strong> {{ consulta.paciente.nome }}</p>
+      <p><strong>Idade:</strong> {{ consulta.paciente.idade }}</p>
+      <p><strong>E-mail:</strong> {{ consulta.paciente.email }}</p>
+      <p><strong>Telefone:</strong> {{ consulta.paciente.telefone }}</p>
+      <hr>
+      <p><strong>Data:</strong> {{ consulta.data }}</p>
+      <p><strong>Horário:</strong> {{ consulta.horario }}</p>
+      <p><strong>Status:</strong> {{ consulta.status }}</p>
+
+      <div class="mt-4">
+        <button class="btn btn-success" (click)="confirmar()">
+          Confirmar consulta
+        </button>
+
+        <button class="btn btn-danger" (click)="cancelar()">
+          Cancelar consulta
+        </button>
+
+        <button class="btn btn-secondary" (click)="concluir()">
+          Concluir consulta
+        </button>
+
+        <button class="btn btn-outline-primary" (click)="voltar()">
+          Voltar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="mensagem" class="alert alert-danger">
+    {{ mensagem }}
+  </div>
+</div>

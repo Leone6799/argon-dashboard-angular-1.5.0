@@ -1,0 +1,29 @@
+.agenda-brand-link {
+  text-decoration: none;
+}
+
+.agenda-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.agenda-brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5e72e4, #825ee4);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: 0 6px 14px rgba(94, 114, 228, 0.35);
+}
+
+.agenda-brand-text {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.2px;
+}

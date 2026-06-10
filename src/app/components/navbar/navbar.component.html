@@ -1,0 +1,40 @@
+<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+  <div class="container-fluid">
+    <a
+      class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
+      href="javascript:void(0)"
+    >
+      {{ getTitle() }}
+    </a>
+
+    <ul class="navbar-nav align-items-center ml-auto">
+      <li class="nav-item" *ngIf="isNutricionista()">
+        <a class="nav-link text-white" routerLink="/app/consultas">
+          <i class="ni ni-calendar-grid-58 mr-1"></i>
+          Consultas
+        </a>
+      </li>
+
+      <li class="nav-item" *ngIf="isPaciente()">
+        <a class="nav-link text-white" routerLink="/app/agenda-paciente">
+          <i class="ni ni-watch-time mr-1"></i>
+          Agenda
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" routerLink="/app/perfil">
+          <i class="ni ni-single-02 mr-1"></i>
+          Perfil
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" href="javascript:void(0)" (click)="sair()">
+          <i class="ni ni-user-run mr-1"></i>
+          Sair
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

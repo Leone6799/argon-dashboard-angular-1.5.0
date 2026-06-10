@@ -1,0 +1,172 @@
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-8 col-7">
+          <h2 class="text-white d-inline-block mb-0">
+            Meu Perfil
+          </h2>
+          <p class="text-white-50 mb-0 mt-2">
+            Visualize suas informações cadastradas no AgendaFit.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--7">
+  <div class="row justify-content-center">
+    <div class="col-xl-8 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">
+                Informações do perfil
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body" *ngIf="usuario">
+          <div *ngIf="mensagem" class="alert alert-info">
+            {{ mensagem }}
+          </div>
+
+          <div class="text-center mb-4">
+            <div class="profile-photo-wrapper mx-auto mb-3">
+              <img
+                *ngIf="fotoPerfil"
+                [src]="fotoPerfil"
+                alt="Foto de perfil"
+                class="profile-photo"
+              />
+
+              <div *ngIf="!fotoPerfil" class="profile-photo-placeholder">
+                <i class="ni ni-single-02"></i>
+              </div>
+            </div>
+
+            <label class="btn btn-sm btn-primary mb-2">
+              Escolher foto
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                (change)="selecionarFoto($event)"
+              />
+            </label>
+
+            <button
+              *ngIf="fotoPerfil"
+              type="button"
+              class="btn btn-sm btn-outline-danger mb-2 ml-2"
+              (click)="removerFoto()"
+            >
+              Remover foto
+            </button>
+          </div>
+
+          <div class="text-center mb-5">
+            <h2 class="mb-1">
+              {{ usuario.nome }}
+            </h2>
+
+            <p class="text-muted mb-0">
+              {{ usuario.idade }} anos
+            </p>
+
+            <span class="badge badge-pill badge-primary mt-2">
+              {{ traduzirTipo(usuario.tipo) }}
+            </span>
+          </div>
+
+          <hr class="my-4" />
+
+          <h6 class="heading-small text-muted mb-4">
+            Dados cadastrados
+          </h6>
+
+          <div class="pl-lg-4">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-control-label">
+                    Nome completo
+                  </label>
+
+                  <input
+                    type="text"
+                    class="form-control form-control-alternative"
+                    [value]="usuario.nome"
+                    readonly
+                  />
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-control-label">
+                    Idade
+                  </label>
+
+                  <input
+                    type="text"
+                    class="form-control form-control-alternative"
+                    [value]="usuario.idade + ' anos'"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-control-label">
+                    E-mail
+                  </label>
+
+                  <input
+                    type="email"
+                    class="form-control form-control-alternative"
+                    [value]="usuario.email"
+                    readonly
+                  />
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-control-label">
+                    Telefone
+                  </label>
+
+                  <input
+                    type="text"
+                    class="form-control form-control-alternative"
+                    [value]="formatarTelefone(usuario.telefone)"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4" />
+
+          <div class="alert alert-light">
+            Para alterar nome, e-mail, telefone ou senha, será necessário implementar uma tela de edição de perfil no backend.
+          </div>
+        </div>
+
+        <div class="card-body" *ngIf="!usuario">
+          <div class="alert alert-danger">
+            Usuário não encontrado. Faça login novamente.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
