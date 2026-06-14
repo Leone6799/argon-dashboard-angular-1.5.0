@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { ConsultaService, HorarioDisponivel, Consulta } from '../../services/consulta.service';
+import { ConsultaService } from '../../services/consulta.service';
+import { Consulta } from '../../models/consulta';
+import { HorarioDisponivel } from '../../models/horario-disponivel';
 import flatpickr from 'flatpickr';
 import { Portuguese } from 'flatpickr/dist/l10n/pt';
 import { Instance } from 'flatpickr/dist/types/instance';

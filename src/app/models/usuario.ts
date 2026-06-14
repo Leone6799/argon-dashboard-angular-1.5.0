@@ -1,8 +1,8 @@
 export interface Usuario {
-  id: number;
+  id?: number;
   nome: string;
-  idade: number;
   email: string;
-  telefone: string;
-  tipo: 'PACIENTE' | 'NUTRICIONISTA';
+  senha?: string;
+  telefone?: string; // Adicionado para a integração com o WhatsApp
+  tipoUsuario: 'PACIENTE' | 'NUTRICIONISTA' | 'ADMIN';
 }

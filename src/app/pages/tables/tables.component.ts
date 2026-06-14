@@ -1,71 +1,52 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ConsultaService, Consulta } from '../../services/consulta.service';
+import { ConsultaService } from '../../services/consulta.service';
+import { Consulta } from '../../models/consulta';
 
 @Component({
   selector: 'app-tables',
-  templateUrl: './tables.component.html'
+  templateUrl: './tables.component.html',
+  styleUrls: ['./tables.component.scss']
 })
 export class TablesComponent implements OnInit {
-  consultas: Consulta[] = [];
+  
+  public consultas: Consulta[] = [];
 
-  consultasPendentes = 0;
-  consultasConfirmadas = 0;
-  consultasCanceladas = 0;
-  consultasConcluidas = 0;
-
-  mensagem = '';
-
-  constructor(
-    private consultaService: ConsultaService,
-    private router: Router
-  ) {}
+  constructor(private consultaService: ConsultaService) { }
 
   ngOnInit(): void {
     this.carregarConsultas();
   }
 
   carregarConsultas(): void {
-    this.consultaService.listarConsultasAdmin().subscribe({
-      next: (consultas) => {
-        this.consultas = consultas;
-        this.atualizarResumo();
+    this.consultaService.getConsultas().subscribe(
+      (data: Consulta[]) => {
+        this.consultas = data;
       },
-      error: () => {
-        this.mensagem = 'Erro ao carregar consultas.';
+      (error: any) => {
+        console.error('Erro ao procurar a listagem de consultas:', error);
       }
-    });
+    );
   }
 
-  atualizarResumo(): void {
-    this.consultasPendentes = this.consultas.filter(c => c.status === 'PENDENTE').length;
-    this.consultasConfirmadas = this.consultas.filter(c => c.status === 'CONFIRMADA').length;
-    this.consultasCanceladas = this.consultas.filter(c => c.status === 'CANCELADA').length;
-    this.consultasConcluidas = this.consultas.filter(c => c.status === 'CONCLUIDA').length;
-  }
 
-  abrirDetalhes(id: number): void {
-    this.router.navigate(['/app/consulta', id]);
-  }
+  abrirConversaWhatsApp(telefone?: string, nomePaciente?: string): void {
+    if (!telefone) {
+      alert('Este paciente não possui número de telefone registado no sistema.');
+      return;
+    }
 
-  confirmar(id: number): void {
-    this.consultaService.confirmarConsulta(id).subscribe({
-      next: () => this.carregarConsultas(),
-      error: () => this.mensagem = 'Erro ao confirmar consulta.'
-    });
-  }
+    // Limpa parênteses, traços e espaços, deixando apenas números
+    let numeroTratado = telefone.replace(/\D/g, '');
 
-  cancelar(id: number): void {
-    this.consultaService.cancelarConsulta(id).subscribe({
-      next: () => this.carregarConsultas(),
-      error: () => this.mensagem = 'Erro ao cancelar consulta.'
-    });
-  }
+    // Se o número tiver 10 ou 11 dígitos, insere o DDI 55
+    if (numeroTratado.length === 10 || numeroTratado.length === 11) {
+      numeroTratado = '55' + numeroTratado;
+    }
 
-  concluir(id: number): void {
-    this.consultaService.concluirConsulta(id).subscribe({
-      next: () => this.carregarConsultas(),
-      error: () => this.mensagem = 'Erro ao concluir consulta.'
-    });
+    const nome = nomePaciente ? nomePaciente : 'Paciente';
+    const textoMensagem = encodeURIComponent(`Olá, ${nome}! Aqui é o seu Nutricionista. Entro em contacto para combinarmos os detalhes da nossa consulta.`);
+    const urlFinal = `https://wa.me/${numeroTratado}?text=${textoMensagem}`;
+
+    window.open(urlFinal, '_blank');
   }
 }

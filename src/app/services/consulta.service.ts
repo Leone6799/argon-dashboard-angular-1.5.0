@@ -1,80 +1,73 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface Usuario {
-  id: number;
-  nome: string;
-  idade: number;
-  email: string;
-  telefone: string;
-  tipo: 'PACIENTE' | 'NUTRICIONISTA';
-}
-
-export interface HorarioDisponivel {
-  id: number;
-  data: string;
-  horario: string;
-  disponivel: boolean;
-  nutricionista: Usuario;
-}
-
-export interface Consulta {
-  id: number;
-  data: string;
-  horario: string;
-  status: 'PENDENTE' | 'CONFIRMADA' | 'CANCELADA' | 'CONCLUIDA';
-  paciente: Usuario;
-  nutricionista: Usuario;
-  horarioDisponivel: HorarioDisponivel;
-}
-
-interface AgendamentoRequest {
-  pacienteId: number;
-  horarioId: number;
-}
+import { Consulta } from '../models/consulta';
+import { HorarioDisponivel } from '../models/horario-disponivel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConsultaService {
-  private apiUrl = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'http://localhost:8080/api/consultas';
+  private horarioUrl = 'http://localhost:8080/api/horarios';
 
-  listarHorariosDisponiveis(data: string): Observable<HorarioDisponivel[]> {
-    return this.http.get<HorarioDisponivel[]>(`${this.apiUrl}/horarios/disponiveis?data=${data}`);
+  constructor(private http: HttpClient) { }
+
+  // ==========================================
+  // MÉTODOS PARA A TELA DE AGENDAMENTO (PACIENTE)
+  // ==========================================
+  
+  listarDatasDisponiveis(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.horarioUrl}/datas-disponiveis`);
   }
 
-  agendarConsulta(dados: AgendamentoRequest): Observable<Consulta> {
-    return this.http.post<Consulta>(`${this.apiUrl}/consultas/agendar`, dados);
+  listarHorariosDisponiveis(data: string): Observable<HorarioDisponivel[]> {
+    return this.http.get<HorarioDisponivel[]>(`${this.horarioUrl}/disponiveis?data=${data}`);
   }
 
   listarConsultasPaciente(pacienteId: number): Observable<Consulta[]> {
-    return this.http.get<Consulta[]>(`${this.apiUrl}/consultas/paciente/${pacienteId}`);
+    return this.http.get<Consulta[]>(`${this.apiUrl}/paciente/${pacienteId}`);
+  }
+
+  // O Angular envia um objeto { pacienteId, horarioId }, então usamos "any" ou uma interface DTO aqui
+  agendarConsulta(agendamento: any): Observable<Consulta> {
+    return this.http.post<Consulta>(this.apiUrl, agendamento);
+  }
+
+  // ==========================================
+  // MÉTODOS PARA A TELA DE DASHBOARD (ADMIN/NUTRICIONISTA)
+  // ==========================================
+
+  getConsultas(): Observable<Consulta[]> {
+    return this.http.get<Consulta[]>(this.apiUrl);
   }
 
   listarConsultasAdmin(): Observable<Consulta[]> {
-    return this.http.get<Consulta[]>(`${this.apiUrl}/consultas/admin`);
+    return this.http.get<Consulta[]>(this.apiUrl);
   }
 
   buscarConsultaPorId(id: number): Observable<Consulta> {
-    return this.http.get<Consulta>(`${this.apiUrl}/consultas/${id}`);
+    return this.http.get<Consulta>(`${this.apiUrl}/${id}`);
   }
 
+  // ==========================================
+  // MÉTODOS DE GERENCIAMENTO DE STATUS
+  // ==========================================
+
   confirmarConsulta(id: number): Observable<Consulta> {
-    return this.http.put<Consulta>(`${this.apiUrl}/consultas/${id}/confirmar`, {});
+    return this.http.put<Consulta>(`${this.apiUrl}/${id}/status`, { status: 'CONFIRMADA' });
   }
 
   cancelarConsulta(id: number): Observable<Consulta> {
-    return this.http.put<Consulta>(`${this.apiUrl}/consultas/${id}/cancelar`, {});
+    return this.http.put<Consulta>(`${this.apiUrl}/${id}/status`, { status: 'CANCELADA' });
   }
 
   concluirConsulta(id: number): Observable<Consulta> {
-    return this.http.put<Consulta>(`${this.apiUrl}/consultas/${id}/concluir`, {});
+    return this.http.put<Consulta>(`${this.apiUrl}/${id}/status`, { status: 'CONCLUIDA' });
   }
 
-  listarDatasDisponiveis(): Observable<string[]> {
-  return this.http.get<string[]>(`${this.apiUrl}/horarios/datas-disponiveis`);
-}
+  atualizarStatus(id: number, status: string): Observable<Consulta> {
+    return this.http.put<Consulta>(`${this.apiUrl}/${id}/status`, { status });
+  }
 }
