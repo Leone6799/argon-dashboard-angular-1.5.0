@@ -127,8 +127,8 @@ export class AgendaPacienteComponent implements OnInit, OnDestroy {
     }
 
     this.consultaService.agendarConsulta({
-      pacienteId: usuario.id,
-      horarioId: horario.id
+    pacienteId: Number(usuario.id), // Garantindo que é número
+    horarioId: Number(horario.id)
     }).subscribe({
       next: () => {
         this.mensagem = 'Consulta solicitada com sucesso. Aguarde confirmação do nutricionista.';

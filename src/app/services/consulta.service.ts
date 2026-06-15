@@ -9,7 +9,7 @@ import { HorarioDisponivel } from '../models/horario-disponivel';
 })
 export class ConsultaService {
 
-  private apiUrl = 'http://localhost:8080/api/consultas';
+  private apiUrl = 'http://localhost:8080/consultas';
   private horarioUrl = 'http://localhost:8080/api/horarios';
 
   constructor(private http: HttpClient) { }
@@ -31,9 +31,9 @@ export class ConsultaService {
   }
 
   // O Angular envia um objeto { pacienteId, horarioId }, então usamos "any" ou uma interface DTO aqui
-  agendarConsulta(agendamento: any): Observable<Consulta> {
-    return this.http.post<Consulta>(this.apiUrl, agendamento);
-  }
+  agendarConsulta(dados: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/agendar`, dados);
+}
 
   // ==========================================
   // MÉTODOS PARA A TELA DE DASHBOARD (ADMIN/NUTRICIONISTA)
