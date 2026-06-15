@@ -26,14 +26,9 @@ export class DashboardComponent implements OnInit {
   }
 
   irParaHorarios(): void {
-    console.log("Botão clicado! Forçando a navegação...");
-    
-    // O Angular vai tentar a rota normal. Se falhar, ele tenta com o prefixo /app automaticamente!
-    this.router.navigate(['/gerenciar-horarios']).catch(err => {
-      console.warn("Rota principal falhou, tentando com o prefixo /app...");
-      this.router.navigate(['/app/gerenciar-horarios']);
-    });
-  }
+  // Agora vai direto para a rota verdadeira, sem bater na parede e voltar
+  this.router.navigate(['/app/gerenciar-horarios']);
+}
 
   carregarConsultas(): void {
     this.mensagem = '';
