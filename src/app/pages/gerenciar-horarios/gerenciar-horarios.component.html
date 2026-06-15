@@ -1,0 +1,60 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-4 mb-5 mb-xl-0">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <h3 class="mb-0">Abrir Novo Horário</h3>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-control-label">Data</label>
+            <input type="date" class="form-control form-control-alternative" [(ngModel)]="novaData">
+          </div>
+          <div class="form-group">
+            <label class="form-control-label">Horário</label>
+            <input type="time" class="form-control form-control-alternative" [(ngModel)]="novoHorario">
+          </div>
+          <button class="btn btn-success btn-block" (click)="adicionar()">Adicionar à Agenda</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-8">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Horários Cadastrados</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Hora</th>
+                <th scope="col">Status</th>
+                <th scope="col">Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let h of horarios">
+                <td>{{ h.data | date:'dd/MM/yyyy' }}</td>
+                <td>{{ h.horario }}</td>
+                <td>
+                  <span class="badge" [ngClass]="h.disponivel ? 'badge-success' : 'badge-danger'">
+                    {{ h.disponivel ? 'Disponível' : 'Ocupado' }}
+                  </span>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-danger" [disabled]="!h.disponivel" (click)="remover(h.id)">
+                    <i class="fas fa-trash"></i> Remover
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,6 +5,7 @@ import { TablesComponent } from '../../pages/tables/tables.component';
 import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
 import { AgendaPacienteComponent } from '../../pages/agenda-paciente/agenda-paciente.component';
 import { ConsultaDetalhesComponent } from '../../pages/consulta-detalhes/consulta-detalhes.component';
+import { GerenciarHorariosComponent } from '../../pages/gerenciar-horarios/gerenciar-horarios.component';
 
 import { NutricionistaGuard } from '../../services/nutricionista.guard';
 import { PacienteGuard } from '../../services/paciente.guard';
@@ -15,6 +16,9 @@ export const AdminLayoutRoutes: Routes = [
     component: DashboardComponent,
     canActivate: [NutricionistaGuard]
   },
+
+  { path: 'gerenciar-horarios', component: GerenciarHorariosComponent, canActivate: [NutricionistaGuard] },
+  
   {
     path: 'consultas',
     component: TablesComponent,
@@ -38,5 +42,6 @@ export const AdminLayoutRoutes: Routes = [
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full'
-  }
+  },
+
 ];

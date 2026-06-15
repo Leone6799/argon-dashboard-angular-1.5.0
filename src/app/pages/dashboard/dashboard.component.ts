@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConsultaService } from '../../services/consulta.service';
 import { Consulta } from '../../models/consulta';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,10 +17,22 @@ export class DashboardComponent implements OnInit {
 
   mensagem = '';
 
-  constructor(private consultaService: ConsultaService) {}
+  constructor(private consultaService: ConsultaService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.carregarConsultas();
+  }
+
+  irParaHorarios(): void {
+    console.log("Botão clicado! Forçando a navegação...");
+    
+    // O Angular vai tentar a rota normal. Se falhar, ele tenta com o prefixo /app automaticamente!
+    this.router.navigate(['/gerenciar-horarios']).catch(err => {
+      console.warn("Rota principal falhou, tentando com o prefixo /app...");
+      this.router.navigate(['/app/gerenciar-horarios']);
+    });
   }
 
   carregarConsultas(): void {
@@ -44,22 +57,31 @@ export class DashboardComponent implements OnInit {
   }
 
   confirmar(id: number): void {
-    this.consultaService.confirmarConsulta(id).subscribe({
-      next: () => this.carregarConsultas(),
-      error: () => this.mensagem = 'Erro ao confirmar consulta.'
-    });
-  }
-
-  cancelar(id: number): void {
-    const confirmou = confirm('Tem certeza que deseja cancelar esta consulta?');
-
-    if (!confirmou) {
-      return;
+  this.consultaService.confirmarConsulta(id).subscribe({
+    next: () => {
+      alert('Consulta confirmada com sucesso e notificação enviada!'); // A caixinha de feedback
+      this.carregarConsultas();
+    },
+    error: (err) => {
+      console.error(err);
+      alert('Erro ao confirmar consulta. Verifique se o serviço de WhatsApp está ativo.');
     }
+  });
+}
 
+cancelar(id: number): void {
+  const confirmou = confirm('Tem certeza que deseja cancelar esta consulta?');
+  if (confirmou) {
     this.consultaService.cancelarConsulta(id).subscribe({
-      next: () => this.carregarConsultas(),
-      error: () => this.mensagem = 'Erro ao cancelar consulta.'
+      next: () => {
+        alert('Consulta cancelada com sucesso!'); // Feedback visual de cancelamento
+        this.carregarConsultas();
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Erro ao cancelar consulta. Verifique os logs do servidor.');
+      }
     });
   }
+}
 }

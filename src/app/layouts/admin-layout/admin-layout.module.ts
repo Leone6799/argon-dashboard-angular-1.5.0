@@ -14,6 +14,7 @@ import { TablesComponent } from '../../pages/tables/tables.component';
 import { AgendaPacienteComponent } from '../../pages/agenda-paciente/agenda-paciente.component';
 import { ConsultaDetalhesComponent } from '../../pages/consulta-detalhes/consulta-detalhes.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { GerenciarHorariosComponent } from 'src/app/pages/gerenciar-horarios/gerenciar-horarios.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -22,6 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RouterModule.forChild(AdminLayoutRoutes),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     ClipboardModule
   ],
@@ -32,7 +34,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     IconsComponent,
     MapsComponent,
     AgendaPacienteComponent,
-    ConsultaDetalhesComponent
+    ConsultaDetalhesComponent,
+    GerenciarHorariosComponent
   ]
 })
 

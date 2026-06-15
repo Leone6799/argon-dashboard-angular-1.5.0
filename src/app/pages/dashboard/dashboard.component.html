@@ -156,17 +156,15 @@
   <div class="row">
     <div class="col-xl-8 mb-5 mb-xl-0">
       <div class="card shadow">
+        
         <div class="card-header border-0">
           <div class="row align-items-center">
             <div class="col">
-              <h3 class="mb-0">
-                Últimas consultas agendadas
-              </h3>
+              <h3 class="mb-0">Consultas dos Pacientes</h3>
             </div>
-
             <div class="col text-right">
-              <a routerLink="/app/consultas" class="btn btn-sm btn-primary">
-                Ver todas
+              <a routerLink="gerenciar-horarios" class="btn btn-sm btn-primary text-white" (click)="irParaHorarios()">
+  <i class="fas fa-calendar-plus mr-1"></i> Gerenciar Horários
               </a>
             </div>
           </div>
@@ -201,7 +199,6 @@
                     <div class="avatar rounded-circle mr-3 bg-gradient-primary text-white d-flex align-items-center justify-content-center">
                       <i class="ni ni-single-02"></i>
                     </div>
-
                     <div class="media-body">
                       <span class="mb-0 text-sm font-weight-bold">
                         {{ consulta.paciente.nome }}
@@ -223,15 +220,12 @@
                 </td>
 
                 <td>
-                  <span
-                    class="badge badge-pill"
-                    [ngClass]="{
+                  <span class="badge" [ngClass]="{
                       'badge-warning': consulta.status === 'PENDENTE',
                       'badge-success': consulta.status === 'CONFIRMADA',
-                      'badge-danger': consulta.status === 'CANCELADA',
-                      'badge-info': consulta.status === 'CONCLUIDA'
-                    }"
-                  >
+                      'badge-danger':  consulta.status === 'CANCELADA',
+                      'badge-info':    consulta.status === 'CONCLUIDA'
+                    }">
                     {{ consulta.status }}
                   </span>
                 </td>
@@ -300,7 +294,6 @@
                 {{ pendentes }}
               </span>
             </div>
-
             <div class="progress">
               <div
                 class="progress-bar bg-gradient-warning"
@@ -319,7 +312,6 @@
                 {{ confirmadas }}
               </span>
             </div>
-
             <div class="progress">
               <div
                 class="progress-bar bg-gradient-success"
@@ -338,7 +330,6 @@
                 {{ canceladas }}
               </span>
             </div>
-
             <div class="progress">
               <div
                 class="progress-bar bg-gradient-danger"
@@ -357,7 +348,6 @@
                 {{ concluidas }}
               </span>
             </div>
-
             <div class="progress">
               <div
                 class="progress-bar bg-gradient-info"
@@ -375,17 +365,16 @@
             Próximas ações
           </h3>
         </div>
-
         <div class="card-body">
           <p class="text-muted">
             Verifique as consultas pendentes e confirme ou cancele os atendimentos solicitados pelos pacientes.
           </p>
-
           <a routerLink="/app/consultas" class="btn btn-primary btn-block">
             Gerenciar consultas
           </a>
         </div>
       </div>
     </div>
+    
   </div>
 </div>

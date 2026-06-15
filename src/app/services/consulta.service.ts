@@ -11,7 +11,7 @@ export class ConsultaService {
 
   // CORREÇÃO 1: Removido o "/api" das URLs para bater com o Java
   private apiUrl = 'http://localhost:8080/consultas';
-  private horarioUrl = 'http://localhost:8080/horarios';
+  private horarioUrl = 'http://localhost:8080/api/horarios';
 
   constructor(private http: HttpClient) { }
 
@@ -44,10 +44,9 @@ export class ConsultaService {
     return this.http.get<Consulta[]>(`${this.apiUrl}/admin`);
   }
 
-  listarConsultasAdmin(): Observable<Consulta[]> {
-    // CORREÇÃO 2: Adicionado o /admin no final da URL
-    return this.http.get<Consulta[]>(`${this.apiUrl}/admin`);
-  }
+listarConsultasAdmin(): Observable<any> {
+    return this.http.get<Consulta[]>(this.apiUrl); // CORRETO
+}
 
   buscarConsultaPorId(id: number): Observable<Consulta> {
     return this.http.get<Consulta>(`${this.apiUrl}/${id}`);
@@ -68,6 +67,21 @@ export class ConsultaService {
 
   concluirConsulta(id: number): Observable<Consulta> {
     return this.http.put<Consulta>(`${this.apiUrl}/${id}/concluir`, {});
+  }
+
+  // ==========================================
+  // GERENCIAMENTO DE HORÁRIOS (ADMIN)
+  // ==========================================
+  listarTodosHorarios(): Observable<HorarioDisponivel[]> {
+    return this.http.get<HorarioDisponivel[]>(`${this.horarioUrl}/todos`);
+  }
+
+  adicionarHorario(horario: any): Observable<HorarioDisponivel> {
+    return this.http.post<HorarioDisponivel>(this.horarioUrl, horario);
+  }
+
+  removerHorario(id: number): Observable<any> {
+    return this.http.delete(`${this.horarioUrl}/${id}`);
   }
 
 }
